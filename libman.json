@@ -1,0 +1,13 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "Faker@3.1.0",
+      "destination": "wwwroot/lib/Faker/",
+      "files": [
+        "faker.min.js"
+      ]
+    }
+  ]
+}
