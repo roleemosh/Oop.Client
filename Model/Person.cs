@@ -2,11 +2,11 @@
 {
     public record Person
     {
-        public Guid EmployeeID { get; set; }
+        public string EmployeeID { get; set; }
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
         public byte AccessLevel { get; private set; }
-        public Person(Guid employeeID, string firstName, string lastName, byte accessLevel)
+        public Person(string employeeID, string firstName, string lastName, byte accessLevel)
         {
             this.EmployeeID = employeeID;
             this.FirstName = firstName;

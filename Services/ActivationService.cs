@@ -22,14 +22,14 @@ namespace Oop.Client.Services
             services.AddAuthorizationCore();
             services.AddSingleton(serviceProvider => (IJSInProcessRuntime)serviceProvider.GetRequiredService<IJSRuntime>());
 #pragma warning disable CA1416 // Validate platform compatibility
-            services.TryAddSingleton<IIndexDBService, IndexDBService>();
+            services.TryAddSingleton<IndexDBService>();
             services.TryAddSingleton<FakeService>();
 #pragma warning restore CA1416 // Validate platform compatibility
         } 
 
         public static async Task RunServicesAsync(this IServiceProvider services)
         {
-           await (services.GetService<FakeService>() as IInitialize).Initialize();
+          // await (services.GetService<IndexDBService>() as IInitialize).Initialize();
         }
     }
 }

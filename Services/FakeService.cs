@@ -7,7 +7,7 @@ using System.Text.Json;
 namespace Oop.Client.Services
 {
     [SupportedOSPlatform("browser")]
-    public partial class FakeService : IInitialize
+    public partial class FakeService : IInitialize, IDisposable
     {
         private JSObject _modul;
 
@@ -26,6 +26,14 @@ namespace Oop.Client.Services
             var fakePeople = JsonSerializer.Deserialize<List<Person>>(peopleJson);
 
             OnFakePeopleChanged?.Invoke(fakePeople);
+        }
+
+        public void Dispose()
+        {
+            if (_modul != null)
+            {
+                _modul.Dispose();
+            }
         }
 
         public async Task Initialize()

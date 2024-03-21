@@ -1,0 +1,78 @@
+﻿@page "/people"
+﻿@using Microsoft.AspNetCore.Components.QuickGrid
+@using Oop.Client.Model
+@using Oop.Client.Services
+@using System.Text.Json
+@inject IndexDBService IndexedDb
+@inject FakeService Fake
+
+<PageTitle>People</PageTitle>
+
+@if (_isLoaded == false)
+{
+    <p>Loading... </p>
+}
+else
+{
+    <div class="overflow-hidden position-absolute h-100 w-100 top-0" tabindex="-1">
+        <div class="overflow-auto position-relative h-100 w-100 ">
+            <QuickGrid ItemSize=30 TGridItem=Person ItemsProvider=@ProvideVirtualizedItems Virtualize="true" Class="table">
+                <PropertyColumn Property="@(p => p.EmployeeID)" Sortable="true">
+                    <ColumnOptions>
+                        <div class="search-box">
+                            <input type="search" autofocus @bind="_employeeIDFilter" @bind:event="oninput" placeholder="ID..." />
+                        </div>
+                    </ColumnOptions>
+                </PropertyColumn>
+                <PropertyColumn Property="@(p => p.FirstName)" Sortable="true">
+                    <ColumnOptions>
+                        <div class="search-box">
+                            <input type="search" autofocus @bind="_firstNameFilter" @bind:event="oninput" placeholder="First name..." />
+                        </div>
+                    </ColumnOptions>
+                </PropertyColumn>
+                <PropertyColumn Property="@(p => p.LastName)" Sortable="true" />
+                <PropertyColumn Property="@(p => p.AccessLevel)" Sortable="true">
+                    <ColumnOptions>
+                        <div class="search-box">
+                            <p>Min access level</p>
+                            <input type="range" @bind="_minAccessLevelFilter" @bind:event="oninput" min="0" max="@maxAccessLevel" />
+                            <p>Max access level</p>
+                            <input type="range" @bind="_maxAccessLevelFilter" @bind:event="oninput" min="0" max="@maxAccessLevel" />
+                        </div>
+                    </ColumnOptions>
+                </PropertyColumn>
+
+            </QuickGrid>
+        </div>
+    </div>
+}
+<style>
+
+    /* Sticky header while scrolling */
+    ::deep thead {
+        position: sticky;
+        top: 0;
+        background-color: #d8d8d8;
+        outline: 1px solid gray;
+        z-index: 1;
+    }
+
+    /* For virtualized grids, it's essential that all rows have the same known height */
+    ::deep tr {
+        height: 30px;
+        border-bottom: 0.5px solid silver;
+    }
+
+    table {
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    tbody td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+</style>
